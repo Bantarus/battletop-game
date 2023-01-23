@@ -4,6 +4,8 @@ export class BattlefieldScene extends Phaser.Scene {
 
     private battlefield:Battlefield;
 
+    private frameTime:number;
+
     constructor() {
         super({ key: 'battlefield', active: false });
     }
@@ -17,8 +19,32 @@ export class BattlefieldScene extends Phaser.Scene {
 
     create() {
 
+        var camera = this.cameras.main;
+
         this.scene.launch('battlefield-ui')
-        this.add.image(400, 400, 'battlemap');
+        this.add.image(400, 400, 'battlemap')
+        .setInteractive()
+         // event listener to move the camera throught the map
+        .on("pointerdown", function(pointer){
+
+            if(pointer.leftButtonDown()){
+                console.log("Moving with pointer down !")
+                
+                camera.startFollow(pointer)
+               
+            }
+
+
+        
+        })
+        .on("pointerup", function(pointer){
+
+            if(pointer.leftButtonReleased())
+            camera.stopFollow();
+
+        })
+        
+        ;
         
 
         // this.input.enable;
@@ -55,7 +81,7 @@ export class BattlefieldScene extends Phaser.Scene {
         for (var i = 0; i < 5; i++) {
             console.log('i\'m card : ' + i);
             var image = this.add.image(x, y, 'card').setInteractive();
-            image.scale = 0.2;
+           // image.scale = 0.2;
 
             this.input.setDraggable(image);
 
@@ -100,12 +126,16 @@ export class BattlefieldScene extends Phaser.Scene {
 
         });
 
-      
+
+       
 
     }
 
 
     update(time: number, delta: number): void {
+
+        this.frameTime += delta;
+    
 
     }
 

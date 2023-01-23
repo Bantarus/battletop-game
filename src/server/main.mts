@@ -2,8 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module.mjs';
 import { join } from 'path';
-import { Server } from 'socket.io'
-import * as http from 'http'
+// import { Server } from 'socket.io'
+// import * as http from 'http'
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -20,16 +20,16 @@ async function bootstrap() {
 
   const server = app.getHttpServer();
   
-  const io = new Server(server)
+ // const io = new Server(server)
 
 
-  io.on('connection', (socket) => {
-    console.log('a user connected');
+  // io.on('connection', (socket) => {
+  //   console.log('a user connected');
 
-    socket.on('my event', data => {
-      console.log(data);
-    });
-  });
+  //   socket.on('my event', data => {
+  //     console.log(data);
+  //   });
+  // });
 
   await app.listen(3000);
 

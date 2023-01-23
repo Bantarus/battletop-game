@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/client/game.ts',
+  entry: './src/client/game.mts',
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js'
@@ -9,7 +9,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.([cm]?ts|tsx)$/,
         include: path.resolve(__dirname, 'src/client'),
         loader: 'ts-loader'
       },
@@ -27,6 +27,11 @@ module.exports = {
     open: false
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.mts', 'mjs'],
+    extensionAlias: {
+      ".js": [".js", ".ts"],
+      ".cjs": [".cjs", ".cts"],
+      ".mjs": [".mjs", ".mts"]
+     }
   }
 };

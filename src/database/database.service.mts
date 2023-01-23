@@ -17,7 +17,8 @@ export class DatabaseService {
         const adapter = new MemorySync();
         this.db = new lowdb.LowSync(adapter);
 
-        this.db.data = { users: [] }
+        this.db.data = { users: [],
+                        worldmap: [] }
         
 
     }
