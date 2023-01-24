@@ -1,30 +1,50 @@
 import { Injectable } from '@nestjs/common';
-import * as lowdb from 'lowdb'
-import { Memory, MemorySync } from 'lowdb'
+import { Low } from 'lowdb'
+import { JSONFile } from 'lowdb/node'
+import * as fs from "fs";
 
+const filePath = "./db.json"
+
+
+ 
 
 @Injectable()
 export class DatabaseService {
 
-    private db: lowdb.LowSync<any>
-
+    private db:  Low<any>
 
     constructor() {
         this.init();
+       
     }
 
     private init() {
-        const adapter = new MemorySync();
-        this.db = new lowdb.LowSync(adapter);
 
-        this.db.data = { users: [],
-                        worldmap: [] }
+        try{
+            if (!fs.existsSync(filePath)){
+                fs.writeFileSync(filePath,JSON.stringify({}))
+            }
+        
+        }catch(error){
+            console.error(error)
+        }
+
+        const adapter = new JSONFile(filePath);
+        this.db = new Low(adapter);
+
+       
         
 
     }
 
     public getDb(){
         return this.db;
+    }
+
+
+
+    public save(){
+        this.db.write()
     }
 
 
