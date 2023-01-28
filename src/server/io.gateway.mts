@@ -1,7 +1,7 @@
 
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets'
 import { Socket } from 'socket.io';
-
+import { MoveCard } from '../common/move-card.dto.js';
 
 
 
@@ -30,6 +30,15 @@ export class IOGateway {
     handleEvents(@MessageBody() data: string): string {
         console.log("Io event bien reçu !")
       return data;
+    }
+
+
+    @SubscribeMessage('cardMovement')
+    handleCardMovement(@MessageBody() data: MoveCard): string {
+        console.log("Card mouvement !")
+
+
+      return "Movement valided !";
     }
 
 

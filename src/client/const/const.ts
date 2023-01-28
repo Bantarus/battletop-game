@@ -1,8 +1,15 @@
 export let CONST = {
     BATTLEFIELD: {
         ZONE: {
-            WIDTH:100,
-            HEIGHT:100
+            WIDTH:128,
+            HEIGHT:128
         }
     }
+}
+
+
+export enum CardStates {
+    Neutral,
+    Good,
+    Evil
 }

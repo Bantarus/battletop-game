@@ -1,6 +1,6 @@
-import { WorldMapScene } from './scenes/world-map-scene';
-import { BattlefieldScene } from './scenes/battlefield-scene';
-import { BattlefieldUIScene} from './scenes/battlefield-ui-scene';
+import { WorldMapScene } from './scenes/world-map-scene.js';
+import { BattlefieldScene } from './scenes/battlefield-scene.mjs';
+import { BattlefieldUIScene} from './scenes/battlefield-ui-scene.js';
 
 //import Phaser from "phaser";
 

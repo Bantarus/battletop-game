@@ -1,18 +1,17 @@
 import 'phaser';
 import { io, Socket } from 'socket.io-client';
+import { GameConfig } from './game.config.mjs';
 
 
-import { GameConfig } from './game.config.js';
+export const socket:Socket = io();
 
 export class Game extends Phaser.Game {
 
-  public socket:Socket;
 
   constructor(config: Phaser.Types.Core.GameConfig) {
     super(config);
 
-    this.socket=io();
-
+    
 
   }
 
@@ -23,7 +22,7 @@ export class Game extends Phaser.Game {
 window.addEventListener('load', () => {
   const game = new Game(GameConfig);
   
-  game.socket.emit('events', { name: 'Nest' }, (data) => console.log(data));
+  socket.emit('events', { name: 'Nest' }, (data) => console.log(data));
 
   
 });

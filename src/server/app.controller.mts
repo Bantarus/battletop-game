@@ -1,4 +1,5 @@
 import { Controller, Get, Render } from '@nestjs/common';
+import { get } from 'http';
 import { AppService } from './app.service.mjs';
 
 
@@ -11,6 +12,13 @@ export class AppController {
   root(){
     return { message: this.appService.getHello() };
   }
+  
+  @Get('game')
+  @Render('game')
+  game(){
+    return { message: this.appService.getHello() }
+  }
+
  
 
 
