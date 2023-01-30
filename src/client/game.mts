@@ -20,6 +20,7 @@ export class Game extends Phaser.Game {
 }
 
 window.addEventListener('load', () => {
+  
   const game = new Game(GameConfig);
   
   socket.emit('events', { name: 'Nest' }, (data) => console.log(data));

@@ -33,13 +33,6 @@ export class IOGateway {
     }
 
 
-    @SubscribeMessage('cardMovement')
-    handleCardMovement(@MessageBody() data: MoveCard): string {
-        console.log("Card mouvement !")
-
-
-      return "Movement valided !";
-    }
 
 
 }

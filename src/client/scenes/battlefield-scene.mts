@@ -4,6 +4,7 @@ import { MoveCard } from 'src/common/move-card.dto.js';
 import { socket } from '../game.mjs';
 import { Battlefield } from '../objects/battlefield.js';
 import { Tile } from '../objects/tile.js';
+import { Battlefield as BattlefieldDto } from '../../common/battlefield.dto.js';
 
 export class BattlefieldScene extends Phaser.Scene {
 
@@ -23,7 +24,10 @@ export class BattlefieldScene extends Phaser.Scene {
         this.load.image('battlemap', './assets/battlemap.jpg');
 
         
-        this.load.image('card', './assets/card-1.png')
+        this.load.image('card-1', './assets/card-1.png')
+        this.load.image('card-2', './assets/card-2.png')
+        this.load.image('card-3', './assets/card-3.png')
+        this.load.image('card-4', './assets/card-4.png')
     }
 
     create() {
@@ -56,10 +60,7 @@ export class BattlefieldScene extends Phaser.Scene {
         ;
         
 
-      
-        
-        // tilemap and grid
-
+        // create empty battlemap at first (before populating the battlefield)
         this.add.grid(0, 0, 2048, 2048, 128, 128, undefined, undefined, 0x000000);
 
         var battlefield: Tile[] = new Array(256);
@@ -69,26 +70,56 @@ export class BattlefieldScene extends Phaser.Scene {
                 }
         
 
+
+
         this.battlefield = new Battlefield({scene: this, size: 256, tilemap: battlefield});
         
 
-        // draggable cards management
-
+      
         
-        var x = 64;
-        var y = 750;
+        // tilemap and grid
+
+        // get battlefield state from server at creation to populate it
+
+        socket.emit('populateBattlefield', {name:'createBattlefield'}, (data:BattlefieldDto) => {console.log(data)});
+
+        // on server response update full battlefield state (at creation only)
+        // then we do delta update.
+
+        socket.on('populateBattlefield', (data:BattlefieldDto) => {
+            console.log(data)
+
+            for (var i = 0; i < data.tilemap.length; i++){
+
+                let tile = data.tilemap[i]
+
+                if(tile.card != undefined){
+
+                    console.log('i\'m card : ' + tile.card.id);
+                    
+                    let zone = this.battlefield.grid[tile.position-1]
+
+                    let x = zone.x + 64;
+                    let y = zone.y + 64;
+        
+                    var image = this.add.image(x, y, 'card-' + tile.card.id).setInteractive().setData({'id': tile.card.id,'position' : tile.position});
+                   // image.scale = 0.2;
+        
+                    this.input.setDraggable(image);
 
 
-        for (var i = 0; i < 5; i++) {
-            console.log('i\'m card : ' + i);
-            var image = this.add.image(x, y, 'card').setInteractive();
-           // image.scale = 0.2;
+                }
 
-            this.input.setDraggable(image);
+               
 
-            x += 128;
+            }
+        
+        });
 
-        }
+      
+
+       
+        // draggable cards events management
 
         this.input.on('dragstart', function (pointer, gameObject) {
             console.log('dragged !');
@@ -127,8 +158,14 @@ export class BattlefieldScene extends Phaser.Scene {
             gameObject.y = target.y + 64;
             console.log('i\'m dropzone ' + target.getData('index') + ' my location is, x : ' + target.x + ' and y : ' + target.y)
            
-            socket.emit('cardMovement',{cardId : 1,previousBattlemapId : 1, ToBattlemapId:1, previousPosition: 1,ToPosition: 1});
-            
+            socket.emit('cardMovement', {
+                cardId: gameObject.getData('id')
+                , previousBattlemapId: 1
+                , ToBattlemapId: 1
+                , fromPosition: gameObject.getData('position')
+                , ToPosition: target.getData('index')
+            });
+
 
         });
 

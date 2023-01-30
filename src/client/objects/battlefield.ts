@@ -5,8 +5,8 @@ import { Tile } from './tile';
 export class Battlefield extends Phaser.GameObjects.Layer {
 
 
-    private grid: Phaser.GameObjects.Zone[] = [];
-
+    private _grid: Phaser.GameObjects.Zone[] = [];
+  
     constructor(aParams: IBattlefieldConstructor) {
         super(aParams.scene)
       
@@ -52,7 +52,7 @@ export class Battlefield extends Phaser.GameObjects.Layer {
 
 
 
-            this.grid.push(zone)
+            this._grid.push(zone)
             this.add(zone)
             console.log('i\'m zone ' + i + ' my location is, x : ' + xLocation + ' and y : ' + yLocation)
 
@@ -71,6 +71,14 @@ export class Battlefield extends Phaser.GameObjects.Layer {
 
       
     }
+
+    public get grid(): Phaser.GameObjects.Zone[] {
+        return this._grid;
+    }
+    public set grid(value: Phaser.GameObjects.Zone[]) {
+        this._grid = value;
+    }
+
 
     onClickUp(zone: Phaser.GameObjects.Zone): boolean {
         console.log('i\'m zone ' + zone.getData('index'))

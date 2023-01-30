@@ -4,6 +4,7 @@ import { JSONFile } from 'lowdb/node'
 import * as fs from "fs";
 import { User } from '../models/user.entity.js';
 import { Battlefield } from '../models/battlefield.entity.js';
+import { CaseStates } from '../common/const.js';
 
 const filePath = "./db.json"
 
@@ -58,6 +59,10 @@ export class DatabaseService {
 
     }
 
+    public save(){
+        this.db.write();
+    }
+
     public getUser(username:string): User{
 
         const users: User[] = this.db.data.users;
@@ -76,24 +81,35 @@ export class DatabaseService {
     }
 
 
-    public saveMove(cardId:number,battlefieldId:number,position:number){
+    public saveMove(cardId:number,battlefieldId:number,fromPosition:number, toPosition:number){
 
         var battlefield: Battlefield = new Battlefield();
 
         var battlefieldJSON = this.db.data.battlefields.find(b => b.id === battlefieldId);
 
         if(battlefieldJSON != undefined){
-            battlefieldJSON.grid.find(g => g.position === position )
+            console.log(battlefieldJSON.battlefield[toPosition])
+           battlefieldJSON.battlefield[toPosition-1].cardId= cardId;
+           battlefieldJSON.battlefield[toPosition-1].state = CaseStates.Taken ;
+
+           battlefieldJSON.battlefield[fromPosition-1].cardId= null;
+           battlefieldJSON.battlefield[fromPosition-1].state = CaseStates.Free ;
+
+           this.db.write();
 
         }
 
     }
 
 
+    public getBattlefieldPopulation(id:number) : {position:number,cardId:number, state:number}[]{
 
-    public save(){
-        this.db.write()
+        return this.db.data.battlefields.find(b => b.id === id).battlefield;
     }
+
+
+
+    
 
 
     }

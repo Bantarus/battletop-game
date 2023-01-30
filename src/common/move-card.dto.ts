@@ -17,7 +17,7 @@ export class MoveCard {
 
     @IsNotEmpty()
     @IsNumber()
-    previousPosition: number;
+    fromPosition: number;
 
     @IsNotEmpty()
     @IsNumber()
