@@ -77,44 +77,44 @@ export class BattlefieldScene extends Phaser.Scene {
 
       
         
-        // tilemap and grid
+        // // tilemap and grid
 
-        // get battlefield state from server at creation to populate it
+        // // get battlefield state from server at creation to populate it
 
-        socket.emit('populateBattlefield', {name:'createBattlefield'}, (data:BattlefieldDto) => {console.log(data)});
+        // socket.emit('populateBattlefield', {name:'populateBattlefield'}, (data:BattlefieldDto) => {console.log(data)});
 
-        // on server response update full battlefield state (at creation only)
-        // then we do delta update.
+        // // on server response update full battlefield state (at creation only)
+        // // then we do delta update.
 
-        socket.on('populateBattlefield', (data:BattlefieldDto) => {
-            console.log(data)
+        // socket.on('populateBattlefield', (data:BattlefieldDto) => {
+        //     console.log(data)
 
-            for (var i = 0; i < data.tilemap.length; i++){
+        //     for (var i = 0; i < data.tilemap.length; i++){
 
-                let tile = data.tilemap[i]
+        //         let tile = data.tilemap[i]
 
-                if(tile.card != undefined){
+        //         if(tile.card != undefined){
 
-                    console.log('i\'m card : ' + tile.card.id);
+        //             console.log('i\'m card : ' + tile.card.id);
                     
-                    let zone = this.battlefield.grid[tile.position-1]
+        //             let zone = this.battlefield.grid[tile.position-1]
 
-                    let x = zone.x + 64;
-                    let y = zone.y + 64;
+        //             let x = zone.x + 64;
+        //             let y = zone.y + 64;
         
-                    var image = this.add.image(x, y, 'card-' + tile.card.id).setInteractive().setData({'id': tile.card.id,'position' : tile.position});
-                   // image.scale = 0.2;
+        //             var image = this.add.image(x, y, 'card-' + tile.card.id).setInteractive().setData({'id': tile.card.id,'position' : tile.position});
+        //            // image.scale = 0.2;
         
-                    this.input.setDraggable(image);
+        //             this.input.setDraggable(image);
 
 
-                }
+        //         }
 
                
 
-            }
+        //     }
         
-        });
+        // });
 
       
 
@@ -179,7 +179,7 @@ export class BattlefieldScene extends Phaser.Scene {
 
         this.frameTime += delta;
     
-
+     
         
 
     }

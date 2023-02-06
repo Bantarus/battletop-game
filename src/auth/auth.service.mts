@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RegisterUserDto } from 'src/common/register-user.dto.js';
-import { UsersService } from '../users/users.service.mjs';
+import { UsersService } from '../server/users/users.service.mjs';
 
 @Injectable()
 export class AuthService {
@@ -16,9 +16,9 @@ export class AuthService {
   }
 
 
-  async registerUser(registeruserDto: RegisterUserDto): Promise<any>{
+  async registerUser(registerUserDto: RegisterUserDto): Promise<any>{
 
-    const user = await this.usersService.saveOne(registeruserDto);
+    const user = await this.usersService.saveOne(registerUserDto);
 
     return user;
   }

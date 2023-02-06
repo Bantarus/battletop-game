@@ -4,7 +4,7 @@ import { JSONFile } from 'lowdb/node'
 import * as fs from "fs";
 import { User } from '../models/user.entity.js';
 import { Battlefield } from '../models/battlefield.entity.js';
-import { CaseStates } from '../common/const.js';
+import { CaseStates } from '../../common/const.js';
 
 const filePath = "./db.json"
 

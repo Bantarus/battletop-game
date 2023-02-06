@@ -24,6 +24,7 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mongoose": "^9.2.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-socket.io": "^9.2.1",
@@ -34,6 +35,7 @@
     "cts-loader": "^4.2.1",
     "hbs": "^4.2.0",
     "lowdb": "^5.0.5",
+    "mongoose": "^6.9.0",
     "node-libcurl": "^3.0.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",

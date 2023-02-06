@@ -3,7 +3,7 @@ import { Tile } from '../../common/tile.dto.js';
 import { Battlefield } from '../../common/battlefield.dto.js';
 import { Card } from '../../common/card.dto.js';
 import { MoveCard } from '../../common/move-card.dto.js';
-import { DatabaseService } from '../../database/database.service.mjs';
+import { DatabaseService } from '../database/database.service.mjs';
 
 @Injectable()
 export class BattlefieldService {
